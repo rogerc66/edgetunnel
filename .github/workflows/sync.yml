@@ -18,9 +18,6 @@ jobs:
       # Step 1: run a standard checkout action
       - name: Checkout target repo
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PAT_CLASS }}
-          persist-credentials: true
 
       # Step 2: run the sync action
       - name: Sync upstream changes
@@ -30,6 +27,8 @@ jobs:
           upstream_sync_repo: cmliu/edgetunnel
           upstream_sync_branch: main
           target_sync_branch: main
+          upstream_pull_arguments: "--no-edit -X ours"
+          target_repo_token: ${{ secrets.PAT_CLASS }} # automatically generated, no need to set
 
           # Set test_mode true to run tests instead of the true action!!
           test_mode: false
